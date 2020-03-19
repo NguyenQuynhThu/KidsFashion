@@ -26,11 +26,6 @@ namespace KidsFashion.Controllers
 
             return RedirectToAction("ShowCart", "Carts");
         }
-        public ActionResult ContinueShopping()
-        {
-
-            return RedirectToAction("Index", "Products");
-        }
         public ActionResult ShowCart()
         {
             return View("ShowCart", GetCart());
@@ -42,11 +37,10 @@ namespace KidsFashion.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var cart = GetCart(); 
-            cart.Add(existingProduct, quantity, false); 
-            SetCart(cart); 
-
-            return View("ShowCart");
+            var cart = GetCart();
+            cart.Update(existingProduct, quantity);
+            SetCart(cart);
+            return View("ShowCart", GetCart());
         }
 
         public ActionResult RemoveCartItem(int productId)
@@ -55,13 +49,13 @@ namespace KidsFashion.Controllers
             cart.Remove(productId);
             SetCart(cart);
 
-            return View("ShowCart", cart);
+            return View("ShowCart", GetCart());
         }
 
         public ActionResult RemoveAll()
         {
             ClearCart();
-            return View();
+            return View("ShowCart", GetCart());
         }
 
         private Cart GetCart() 

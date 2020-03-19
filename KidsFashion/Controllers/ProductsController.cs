@@ -16,11 +16,42 @@ namespace KidsFashion.Controllers
         private KidsFashionContext db = new KidsFashionContext();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(string searchString, int categoryId = 0)
         {
-            var products = db.Products.Include(p => p.Category);
-            return View(products.ToList());
+            /*var products = db.Products.Include(p => p.Category);
+            return View(products.ToList());*/
+            var categories = from c in db.Categories select c;
+            ViewBag.categoryID = new SelectList(categories, "CategoryID", "CategoryName"); 
+
+            var products = from p in db.Products select p;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Name.Contains(searchString));
+            }
+       
+            if (categoryId != 0)
+            {
+                products = products.Where(p => p.CategoryId == categoryId);
+            }
+
+            List<Product> listProducts = new List<Product>();
+            foreach (var item in products)
+            {
+                Product temp = new Product();
+                temp.Id = item.Id;
+                temp.Name = item.Name;
+                temp.Description = item.Description;
+                temp.Category = item.Category;
+                temp.Price = item.Price;
+                temp.Thumbnail = item.Thumbnail;
+                listProducts.Add(temp);
+            }
+
+            return View(listProducts);
         }
+
+        
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
