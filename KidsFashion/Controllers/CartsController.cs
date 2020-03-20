@@ -42,8 +42,11 @@ namespace KidsFashion.Controllers
             SetCart(cart);
             return View("ShowCart", GetCart());
         }
-
-        public ActionResult RemoveCartItem(int productId)
+        public ActionResult gicungduoc(int? abc)
+        {
+            return View("ShowCart", GetCart());
+        }
+            public ActionResult RemoveCartItem(int productId)
         {
             var cart = GetCart();
             cart.Remove(productId);

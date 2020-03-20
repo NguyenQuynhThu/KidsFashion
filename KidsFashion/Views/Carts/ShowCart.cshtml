@@ -25,7 +25,14 @@
     <td><img src="@item.ProductThumbnail" style="width:100px" alt="Alternate Text" /></td>
     <td>@item.ProductName</td>
     <td>@item.ProductPrice</td>
-    <td>@item.Quantity</td>
+    <td>
+        @using (Html.BeginForm("UpdateCart", "Carts", FormMethod.Post))
+        {
+            @Html.Hidden("productId", item.ProductId)
+            @Html.TextBox("quantity", item.Quantity) <input type="submit" value="Update"/>
+        }
+
+    </td>
     <td>@item.TotalItemPrice</td>
     <td>
         @Html.ActionLink("Remove", "RemoveCartItem", "Carts", new { productId = item.ProductId }, new { @class="text-danger"})

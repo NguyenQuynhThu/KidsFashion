@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using KidsFashion.Data;
 using KidsFashion.Models;
+using PagedList;
 
 namespace KidsFashion.Controllers
 {
@@ -47,7 +48,7 @@ namespace KidsFashion.Controllers
                 temp.Thumbnail = item.Thumbnail;
                 listProducts.Add(temp);
             }
-
+            
             return View(listProducts);
         }
 

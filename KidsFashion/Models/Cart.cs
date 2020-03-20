@@ -50,7 +50,7 @@ namespace KidsFashion.Models
 
         public void Update(Product product, int quantity)
         {
-            Add(product, 1, true);
+            Add(product, quantity, true);
 
         }
 
